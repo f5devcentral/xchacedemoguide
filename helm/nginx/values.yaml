@@ -1,0 +1,36 @@
+pullPolicy: Always
+
+securityContext: 
+  runAsNonRoot: true
+
+imagePullSecret:
+  name: interestingstorage-secret
+
+nginx:
+  name: "nginx-rp"
+  podSecurityContext: 
+    runAsNonRoot: true    
+
+  podAnnotations: 
+    ves.io/virtual-sites: "ves-io-shared/ves-io-all-res"  
+  service:
+    type: ClusterIP
+    port: 9080
+  serviceAccount:  
+    create: true
+  resources:
+      requests:
+        memory: 256Mi
+        cpu: 500m
+
+migration:
+  username: haservices
+  password: haservicespass    
+  host: re2ce.internal
+  port: "5432"
+  name: haservicesdb
+  migration_path: "/migrations"
+  resources:
+      requests:
+        memory: 256Mi
+        cpu: 500m

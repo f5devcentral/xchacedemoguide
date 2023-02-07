@@ -1,0 +1,15 @@
+FROM ubuntu:latest
+
+RUN apt update
+RUN apt-get -y install zlib1g-dev libpcre3-dev libpq-dev libssl-dev perl make build-essential wget curl
+
+RUN mkdir /usr/openresty
+WORKDIR /usr/openresty
+
+RUN wget https://openresty.org/download/openresty-1.21.4.1.tar.gz
+RUN tar -zxvf openresty-1.21.4.1.tar.gz
+WORKDIR ./openresty-1.21.4.1
+RUN ./configure --with-http_postgres_module
+
+RUN make
+RUN make install

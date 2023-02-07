@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.nginx.name }}  
+
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.nginx.name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  
+  template:
+    metadata:
+      {{- with .Values.nginx.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app.kubernetes.io/name: {{ .Values.nginx.name }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+
+    spec:
+      {{- with .Values.imagePullSecret }}
+      imagePullSecrets:
+        - name: {{ .name }}
+      {{- end }}
+      serviceAccountName: {{ .Values.nginx.name }}
+      securityContext:
+        {{- toYaml .Values.nginx.podSecurityContext | nindent 8 }}    
+      initContainers:
+        - name: initdb
+          image: interestingstorage/migrate:latest
+          imagePullPolicy: {{ .Values.pullPolicy }}          
+          resources:
+            {{- toYaml .Values.migration.resources | nindent 12 }}
+          args: 
+            - -verbose 
+            - -database 
+            - postgres://{{ .Values.migration.username }}:{{ .Values.migration.password }}@{{ .Values.migration.host }}:{{ .Values.migration.port }}/{{ .Values.migration.name }}?sslmode=disable 
+            - -path 
+            - /migrations 
+            - up
+          volumeMounts:
+            - name: migrations
+              mountPath: "{{ .Values.migration.migration_path }}"
+      containers:
+      - name: nginx-rp        
+        image: interestingstorage/openrestypg-nonroot:latest
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP    
+        livenessProbe:
+          httpGet:
+            path: /probe
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /probe
+            port: http  
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}            
+        volumeMounts:
+        - mountPath: /etc/nginx/conf.d
+          name: nginx-conf
+        - mountPath: /var/log/nginx
+          name: log
+        - mountPath: /data/nginx/cache
+          name: cache
+      volumes:    
+      - name: migrations
+        configMap:
+          name: {{ include "ha-db.fullname" . }}-db-migrate-config
+      - name: nginx-conf
+        configMap:
+          name: nginx-conf 
+          items:
+            - key: default.conf
+              path: default.conf
+      - name: log
+        emptyDir: {}
+      - name: cache
+        emptyDir: {}

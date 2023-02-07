@@ -1,0 +1,10 @@
+apiVersion: v2
+name: ha-postgres
+description: A Helm chart for HA Services Sample
+type: application
+version: 0.1.0
+appVersion: "1.16.0"
+dependencies:
+  - name: postgresql-ha
+    repository: https://charts.bitnami.com/bitnami
+    version: "10.0.3" 

@@ -1,0 +1,6 @@
+FROM ubuntu:latest as account
+RUN useradd -u 10001 nonroot
+
+FROM migrate/migrate
+COPY --from=account /etc/passwd /etc/passwd
+USER 10001

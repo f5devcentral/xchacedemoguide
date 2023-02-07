@@ -1,0 +1,21 @@
+FROM openrestypg
+
+ENV PATH="$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin"
+COPY ./nginx/config/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf
+
+RUN useradd -u 10001 nginx
+
+RUN mkdir /usr/local/openresty/nginx/cache
+RUN mkdir /usr/local/openresty/nginx/conf.d
+RUN mkdir -p /var/run/openresty
+
+RUN chown -R nginx:nginx /usr/local/openresty/nginx/cache && \
+    chown -R nginx:nginx /usr/local/openresty/nginx/logs && \
+    chown -R nginx:nginx /usr/local/openresty/nginx/conf.d
+RUN chmod -R 777 /usr/local/openresty/nginx && \
+    chmod -R 777 /var/run/openresty
+
+USER 10001
+
+CMD ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"]
+STOPSIGNAL SIGQUIT
