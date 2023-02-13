@@ -276,17 +276,17 @@ After that, go back to the *values.yaml* file and paste the version key into the
 .. figure:: assets/kubectlversion.png 
  
  
-Deploying HA Postgres chart to xC vK8s
+Deploying HA PostgreSQL chart to xC vK8s
 ******************************** 
  
-As values are now setup to run in xC, deploy the chart to xC vK8s cluster using the *helm upgrade –install* command. 
+As values are now setup to run in xC, deploy the chart to xC vK8s cluster using the **xc-deploy-bd** command in the Visual Studio Code CLI.  
   
 .. figure:: assets/chartdeploy.png 
  
 Checking deployment 
 ******************
  
-After we deployed the HA Postgres to vK8s, we can check that pods and services are deployed successfully from distributed virtual Kubernetes dashboard. 
+After we deployed the HA PostgreSQL to vK8s, we can check that pods and services are deployed successfully from distributed virtual Kubernetes dashboard. 
  
 To do that take the following steps. 
 On the Virtual K8s page, click the vK8s we created earlier to drill down into its details. 
@@ -348,7 +348,7 @@ Enter a port number in the Port field. We use **5432** for this guide. And compl
 .. figure:: assets/poolport.png  
  
 Creating TCP Load Balancer
-*********************** 
+************************** 
  
 As soon as Origin Pool is ready, the TCP Load Balancer can be created, as described below. This load balancer needs to be accessible only from RE network, or, in other words, to be advertised there, which will be done in the next step. 
  
@@ -395,7 +395,7 @@ Complete creating the load balancer by clicking **Save and Exit**.
 Step 4: Test connection from RE to DB
 ################################# 
  
-Infrastructure to Test the deployed Postgres SQL 
+Infrastructure to Test the deployed PostgreSQL 
 ****************************************
  
 To test access to the CE deployed Database from RE deployment, we will use an NGINX reverse proxy with a module that gets data from PosgreSQL and this service will be deployed to the Regional Edge. It is not a good idea to use this type of a data pull in production, but it is very useful for test purposes. So, test user will query the RE Deployed NGINX Reverse proxy, which will perform a query to the database. The HTTP Load Balancer and Origin Pool also should be created to access NGINX from RE.  
@@ -403,39 +403,43 @@ To test access to the CE deployed Database from RE deployment, we will use an NG
 .. figure:: assets/diagram4.png 
 
  
-Initializing the database
-************************
+Build Docker
+************
  
-To query our PostgreSQL  data, the data should be first put in the database. The easiest way to initialize a database is to use the migrate/migrate project. We will use a dockerfile…… The only customization required is to run the docker in non-root mode. 
-  
+To query our PostgreSQL data, the data should be first put in the database. The easiest way to initialize a database is to use the *migrate/migrate project*.  As a Dockerfile we will use a *dockerfile.migrate.nonroot*. The only customization required is to run the docker in non-root mode.  
+
 .. figure:: assets/migrate.png 
  
-NGINX Reverse Proxy with Postgres Module 
-****************************************
+Default NGINX build does not have PostgreSQL Module included. Luckily, the OpenResty project allows easy compiling NGINX with the module. Take a look at the *Dockerfile.openrestry*.
+   
+.. figure:: assets/module.png 
  
-Default NGINX build does not have PostgreSQL Module included. Luckily, the OpenResty project allows easy compiling NGINX with the module. Edit this… run this…  
-  
-.. figure:: assets/module.png
- 
-The NGINX deployed on RE should run in non-root mode. The below Dockerfile represents…. That should be run in …  
+The NGINX deployed on RE should run in non-root mode. So we convert the the openresty compiled by NGINX into the nonroot one.  
   
 .. figure:: assets/nonroot.png 
  
+And now let’s build all this by running the **make docker** command in the Visual Studio Code CLI. Please note this may take some time.  
+  
+.. figure:: assets/makedocker.png 
  
-NGINX Reverse Proxy Config to Query Postgres DB 
+NGINX Reverse Proxy Config to Query PostgreSQL DB
 ***********************************************
  
-NGINX creates a server, listening to port 8080. The default location gets all items from article table and caches them. The following NGINX config sets up the reverse proxy configuration, with the database specified on the hostname “re2ce.internal” with the default port because we have configured the TCP load balancer. It also sets up a server on a port 8080 to present the query data that returns all items from the “articles” table.  
+NGINX creates a server, listening to port 8080. The default location gets all items from article table and caches them. The following NGINX config sets up the reverse proxy configuration to forward traffic from RE to CE, where “re2ce.internal” is the TCP load balancer we created earlier `Creating TCP Load Balancer`_.
+
+
+It also sets up a server on a port 8080 to present the query data that returns all items from the “articles” table.  
   
 .. figure:: assets/proxyconfig.png 
  
 Deploying NGINX Reverse Proxy
-*************************** 
+****************************
  
-To deploy NGINX call *helm upgrade --install nginx-reverseproxy* by running this command on….. 
+To deploy NGINX run the **make xc-deploy-nginx** command in the Visual Studio Code CLI.  
+ 
   
 .. figure:: assets/deployreverse.png 
- 
+
  
 Overviewing the NGINX Deployment 
 ******************************
