@@ -198,7 +198,7 @@ Complete creating the vK8s object by clicking **Save and Exit**. Wait for the vK
 Step 2: Deploy HA PostgreSQL to CE 
 ##################################
 
-Now that the environment for both RE and CE deployments is ready, we can move on to deploying HA PostgreSQL to CE. We will use Helm charts to deploy a PostgreSQL cluster configuration with the help of Bitnami, which provides ready-made Helm charts for HA databases: MongoDB, MariaDB, PostgreSQL, etc., in the following repository: `https://charts.bitnami.com/bitnami <https://charts.bitnami.com/bitnami>`_. In general, these Helm charts work very similarly, so the example used here can be applied to most other databases or services.  
+Now that the environment for both RE and CE deployments is ready, we can move on to deploying HA PostgreSQL to CE. We will use Helm charts to deploy a PostgreSQL cluster configuration with the help of Bitnami, which provides ready-made Helm charts for HA databases: MongoDB, MariaDB, PostgreSQL, etc., in available in the Bitnami Library for Kubernetes: `https://github.com/bitnami/charts <https://github.com/bitnami/charts>`_. In general, these Helm charts work very similarly, so the example used here can be applied to most other databases or services.  
  
 HA PostgreSQL Architecture in vK8s 
 *****************************
