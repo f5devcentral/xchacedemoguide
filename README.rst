@@ -59,7 +59,7 @@ The diagram shows how VK8S clusters can be deployed across multiple CEs with vir
 Creating an AWS VPC site
 ******************** 
  
-Let's start creating the AWS VPC site with worker nodes. Log in the F5 Distributed Cloud Console and navigate to the **Cloud and Edge Sites** service, then to **Site Management** and select **AWS VPC Sites**. Click the **Add AWS VPC Site** button. 
+Let's start creating the AWS VPC site with worker nodes. Log in the F5 Distributed Cloud Console and navigate to the **Multi-Cloud Network Connect** service, then to **Site Management** and select **AWS VPC Sites**. Click the **Add AWS VPC Site** button. 
    
 .. figure:: assets/awsvpc.png
  
@@ -100,7 +100,7 @@ After we configured 3 nodes, let’s proceed and apply the configuration.
   
 .. figure:: assets/nodeapply.png 
  
-Let’s set the deployment type. From the Automatic Deployment drop-down menu, select **Automatic Deployment**, then select an existing AWS credentials object. 
+From the Cloud Credentials drop-down menu, select the existing AWS credentials object. 
  
 .. figure:: assets/deployment.png 
  
@@ -249,7 +249,7 @@ Paste the copied values into the *values.yaml*.
  
 An important key in values for the database is *clusterDomain*. Let's proceed to construct the value this way: *{sitename}.{tenant_id}.tenant.local*. Note that *site_id* here is *Edge site id*, not the virtual one. We can get this information from site settings.  
  
-First, navigate to the **Cloud and Edge Sites** service, proceed to the **Site Management** section, and select the **AWS VPC Sites** option. Open the **JSON** settings of the site in AWS VPC Site list. **Tenant id** and **site name** will be shown as tenant and name fields of the object. 
+First, navigate to the **Multi-Cloud Network Connect** service, proceed to the **Site Management** section, and select the **AWS VPC Sites** option. Open the **JSON** settings of the site in AWS VPC Site list. **Tenant id** and **site name** will be shown as tenant and name fields of the object. 
  
 .. figure:: assets/tenant.png 
  
