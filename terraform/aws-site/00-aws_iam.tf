@@ -25,7 +25,7 @@ resource "aws_iam_user_policy_attachment" "xc_user" {
 resource "aws_iam_policy" "xc_policy" {
   name        = "${var.environment}-policy"
   description = "F5 XC Cloud policy"
-  policy = data.aws_iam_policy_document.xc_policy_document.json
+  policy      = data.aws_iam_policy_document.xc_policy_document.json
 
   depends_on = [ 
     aws_iam_user.xc_user
@@ -35,8 +35,8 @@ resource "aws_iam_policy" "xc_policy" {
 data "aws_iam_policy_document" "xc_policy_document" {
   version = "2012-10-17"
   statement {
-    sid = "AutoScalingPermissions"
-    effect = "Allow"
+    sid     = "AutoScalingPermissions"
+    effect  = "Allow"
     actions = [
       "autoscaling:AttachLoadBalancerTargetGroups",
       "autoscaling:AttachLoadBalancers",
@@ -59,8 +59,8 @@ data "aws_iam_policy_document" "xc_policy_document" {
     resources = ["*"]
   }
   statement {
-    sid = "EC2Permissions"
-    effect = "Allow"
+    sid     = "EC2Permissions"
+    effect  = "Allow"
     actions = [
       "ec2:AllocateAddress",
       "ec2:AssignPrivateIpAddresses",
@@ -144,8 +144,8 @@ data "aws_iam_policy_document" "xc_policy_document" {
     resources = ["*"]
   }
   statement {
-    sid = "ELBPermissions"
-    effect = "Allow"
+    sid     = "ELBPermissions"
+    effect  = "Allow"
     actions = [
       "elasticloadbalancing:AddTags",
       "elasticloadbalancing:CreateListener",
@@ -173,8 +173,8 @@ data "aws_iam_policy_document" "xc_policy_document" {
     resources = ["*"]
   }
   statement {
-    sid = "IAMPermissions"
-    effect = "Allow"
+    sid     = "IAMPermissions"
+    effect  = "Allow"
     actions = [
       "iam:AddRoleToInstanceProfile",
       "iam:AttachRolePolicy",
@@ -211,12 +211,12 @@ data "aws_iam_policy_document" "xc_policy_document" {
 }
 
 output "aws_access_key_id" {
-  value = aws_iam_access_key.xc_user.id
+  value       = aws_iam_access_key.xc_user.id
   description = "AWS AccessKey"
 }
 
 output "aws_access_key_secret" {
- value = aws_iam_access_key.xc_user.secret
- sensitive = true
+ value       = aws_iam_access_key.xc_user.secret
+ sensitive   = true
  description = "AWS AccessSecret"
 }

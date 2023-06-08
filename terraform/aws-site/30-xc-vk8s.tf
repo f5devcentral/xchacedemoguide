@@ -32,6 +32,10 @@ resource "volterra_virtual_site" "hace" {
   }
 
   site_type = "CUSTOMER_EDGE"
+
+  depends_on = [ 
+    volterra_namespace.hace
+   ]
 }
 
 resource "local_file" "kubeconfig" {
@@ -54,5 +58,5 @@ output "tenant_name" {
 
 output "cluster_domain" {
   description = "Cluster Domain"
-  value = "aws-${var.environment}.${volterra_namespace.hace.tenant_name}.tenant.local"
+  value       = "aws-${var.environment}.${volterra_namespace.hace.tenant_name}.tenant.local"
 }

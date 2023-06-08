@@ -14,12 +14,22 @@ variable "xc_api_p12_file" {
 	default = "../api-creds.p12"
 }
 
+variable "kubeconfig_path" {
+	type 		= string
+  default = "../kubeconfig.conf"
+}
+
 variable "aws_region" {
 	type 		= string
 	default = "us-east-2"
 }
 
-variable "kubeconfig_path" {
+variable "aws_access_key" {
 	type 		= string
-  default = "../kubeconfig.conf"
+	default = ""
+}
+
+variable "aws_secret_key" {
+	type 		= string
+	default = ""
 }

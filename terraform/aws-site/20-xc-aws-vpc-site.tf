@@ -1,5 +1,5 @@
 resource "volterra_cloud_credentials" "aws_cred" {
-  name = "aws-${var.environment}"
+  name      = "aws-${var.environment}"
   namespace = "system"
   aws_secret_key {
 	  access_key = aws_iam_access_key.xc_user.id
