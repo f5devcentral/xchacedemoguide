@@ -402,7 +402,17 @@ To test access to the CE deployed Database from RE deployment, we will use an NG
 
 .. figure:: assets/diagram4.png 
 
+Update Credentials in Makefile
+******************************
  
+First, we need to update the credentials in the Makefile available in the repository root, where 
+- **DOCKER_REGISTRY** is your **dockerhub username**
+- **DOCKER_SECRET** is **password** or **access token**
+
+.. figure:: assets/makefile_creds.png 
+
+Next, we will run the **docker login** command to log in to the Docker registry.
+
 Build Docker
 ************
  
