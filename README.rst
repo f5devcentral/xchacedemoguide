@@ -406,8 +406,9 @@ Update Credentials in Makefile
 ******************************
  
 First, we need to update the credentials in the Makefile available in the repository root, where 
-- **DOCKER_REGISTRY** is your **dockerhub username**
-- **DOCKER_SECRET** is **password** or **access token**
+
+•	 **DOCKER_REGISTRY** is your **dockerhub username**
+•	 **DOCKER_SECRET** is **password** or **access token**
 
 .. figure:: assets/makefile_creds.png 
 
