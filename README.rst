@@ -220,7 +220,23 @@ In the popup window that appears, select the expiration date, and then click **D
   
 .. figure:: assets/kubeconfigdate.png 
 
-Note: go to the Makefile to replace the name of our *kubeconfig* file with the one you just downloaded. 
+Updating Credentials in Makefile
+***************************
+
+Before we can proceed to the next step, we will need to update the creds in the Makefile. Go to the Makefile and update the following variables:
+
+.. figure:: assets/makefile_variables.png 
+
+1. Indicate your *docker registry* (which is your docker registry user name). 
+
+2. Replace the names of our *kubeconfig* file with the one you just downloaded (note there are a few mentions of it). 
+
+3. Indicate your *docker-server* (which is *https://index.docker.io/v1* for Docker Hub).
+
+4. Indicate your *docker-username*. 
+
+5. Indicate your *docker-password* (which can be password or access token).
+
  
 Making Secrets
 ************ 
