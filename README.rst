@@ -103,6 +103,10 @@ After we configured 3 nodes, let’s proceed and apply the configuration.
 From the Cloud Credentials drop-down menu, select the existing AWS credentials object. 
  
 .. figure:: assets/deployment.png 
+
+Next, we will paste the Public SSH key to access the site. Note that if you don't have a key, you can generate one using the "ssh-keygen" command and then display it with the command "cat ~/.ssh/id_rsa.pub".
+
+.. figure:: assets/ssh_key.png 
  
 Next, we will configure Desired Worker Nodes in the advanced configuration. To do that, in the **Advanced Configuration** section, enable the **Show Advanced Fields** option. 
 Then open the Desired Worker Nodes Selection menu. 
