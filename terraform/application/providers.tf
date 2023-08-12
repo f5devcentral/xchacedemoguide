@@ -4,11 +4,11 @@ terraform {
   required_providers {
     volterra = {
         source  = "volterraedge/volterra"
-        version = "=0.11.22"
+        version = "=0.11.24"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "=2.20.0"
+      version = "=2.22.0"
     }
     helm = {
       source  = "hashicorp/helm"

@@ -14,6 +14,10 @@ resource "volterra_virtual_k8s" "hace" {
     tenant    = "ves-io"
     namespace = "shared"
   }
+
+  depends_on = [
+    volterra_namespace.hace
+  ]
 }
 
 resource "volterra_api_credential" "hace" {

@@ -1,18 +1,18 @@
+resource "tls_private_key" "key" {
+  algorithm = "RSA"
+}
+
 resource "volterra_cloud_credentials" "aws_cred" {
-  name      = "aws-${var.environment}"
+  name = var.environment
   namespace = "system"
   aws_secret_key {
-	  access_key = aws_iam_access_key.xc_user.id
-	  secret_key {
-	  	clear_secret_info {
-	  		url = "string:///${base64encode(aws_iam_access_key.xc_user.secret)}"
-	  	}
-	  }
+    access_key = var.aws_access_key
+    secret_key {
+      clear_secret_info {
+        url = "string:///${base64encode(var.aws_secret_key)}"
+      }
+    }
   }
-
-	depends_on = [
-    aws_iam_access_key.xc_user
-  ]
 }
 
 resource "volterra_aws_vpc_site" "site" {
@@ -36,13 +36,15 @@ resource "volterra_aws_vpc_site" "site" {
   }
 
   vpc {
-	  vpc_id = element(aws_vpc.vpc.*.id, 0)
+    vpc_id = element(aws_vpc.vpc.*.id, 0)
   }
 
+  ssh_key                 = tls_private_key.key.public_key_openssh
   direct_connect_disabled = true
   instance_type           = "t3.xlarge"
   disable_internet_vip    = true
   logs_streaming_disabled = true
+  egress_gateway_default  = true
 
   ingress_gw {
     aws_certified_hw = "aws-byol-voltmesh"
@@ -50,13 +52,13 @@ resource "volterra_aws_vpc_site" "site" {
       use_http_https_port = true
     }
 
-	  az_nodes {
+    az_nodes {
       aws_az_name  = "${var.aws_region}a"
       disk_size    = 80
       local_subnet {
         existing_subnet_id = element(aws_subnet.subnet_a.*.id, 0)
       }
-	  }
+    }
 
     az_nodes {
       aws_az_name  = "${var.aws_region}b"
@@ -64,7 +66,7 @@ resource "volterra_aws_vpc_site" "site" {
       local_subnet {
         existing_subnet_id = element(aws_subnet.subnet_b.*.id, 0)
       }
-	  }
+    }
 
     az_nodes {
       aws_az_name  = "${var.aws_region}c"
@@ -81,10 +83,8 @@ resource "volterra_aws_vpc_site" "site" {
 
   no_worker_nodes = true
 
-	depends_on = [
-    aws_iam_access_key.xc_user,
+  depends_on = [
     volterra_cloud_credentials.aws_cred,
-    aws_iam_user_policy_attachment.xc_user,
     aws_subnet.subnet_a,
     aws_subnet.subnet_b,
     aws_subnet.subnet_c
@@ -99,16 +99,22 @@ resource "volterra_cloud_site_labels" "labels" {
 }
 
 resource "volterra_tf_params_action" "action_apply" {
-	site_name        = volterra_aws_vpc_site.site.name
-	site_kind        = "aws_vpc_site"
-	action           = "apply"
-	wait_for_action  = true
+  site_name        = volterra_aws_vpc_site.site.name
+  site_kind        = "aws_vpc_site"
+  action           = "apply"
+  wait_for_action  = true
   ignore_on_update = true
 
-	depends_on = [
-    aws_iam_access_key.xc_user,
+  depends_on = [
     volterra_aws_vpc_site.site,
-    aws_iam_user_policy_attachment.xc_user,
   ]
 }
 
+output "xc_private_key" {
+  value     = tls_private_key.key.private_key_pem
+  sensitive = true
+}
+
+output "xc_public_key" {
+  value = tls_private_key.key.public_key_openssh
+}
