@@ -279,9 +279,7 @@ Let's proceed to specify the above-mentioned values in the *values.yaml*:
   
 .. figure:: assets/copyvs.png 
  
-2. An important key in values for the database is *clusterDomain*. Let's proceed to construct the value this way: *{sitename}.{tenant_id}.tenant.local*. Note that *site_id* here is *Edge site id*, not the virtual one. We can get this information from site settings.  
- 
-First, navigate to the **Multi-Cloud Network Connect** service, proceed to the **Site Management** section, and select the **AWS VPC Sites** option. Open the **JSON** settings of the site in AWS VPC Site list. **Tenant id** and **site name** will be shown as tenant and name fields of the object. 
+2. An important key in values for the database is *clusterDomain*. Let's proceed to construct the value this way: *{sitename}.{tenant_id}.tenant.local*. Note that *site_id* here is *Edge site id*, not the virtual one. We can get this information from site settings. First, navigate to the **Multi-Cloud Network Connect** service, proceed to the **Site Management** section, and select the **AWS VPC Sites** option. Open the **JSON** settings of the site in AWS VPC Site list. **Tenant id** and **site name** will be shown as tenant and name fields of the object. 
  
 .. figure:: assets/tenant.png 
 
@@ -421,18 +419,6 @@ To test access to the CE deployed Database from RE deployment, we will use an NG
 
 .. figure:: assets/diagram4.png 
 
-Update Credentials in Makefile
-******************************
- 
-First, we need to update the credentials in the Makefile available in the repository root, where 
-
-•	 **DOCKER_REGISTRY** is your **dockerhub username**
-•	 **DOCKER_SECRET** is **password** or **access token**
-
-.. figure:: assets/makefile_creds.png 
-
-Next, we will run the **docker login** command to log in to the Docker registry.
-
 Build Docker
 ************
  
@@ -535,7 +521,7 @@ Testing: Request data from PostgreSQL DB
  
 So, in just a few steps above, the HTTP Load Balancer is set up and can be used to access the reverse Proxy which pulls the data from our PostgreSQL DB backend deployed on the CE. Let's copy the generated **CNAME value** of the created HTTP Load Balancer to test requesting data from the PostgreSQL database.  
  
-Click on the copy icon. 
+Click on the DNS info and then copy icon. 
   
 .. figure:: assets/cnamecopy.png 
  
