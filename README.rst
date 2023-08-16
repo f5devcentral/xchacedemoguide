@@ -366,7 +366,7 @@ In the Name field, enter a name. In the Origin Servers section click **Add Item*
  
 .. figure:: assets/poolname.png  
  
-From the Select Type of Origin Server menu, select the **K8s Service Name of Origin Server on given Sites** type to specify the origin server with its K8s service name. Then enter the service name **ha-postgres-postgresql-ha-pgpool.ha-services-ce**. Select **Virtual Site** option in the Site or Virtual Site menu. And select a virtual site created earlier. After that, pick the **vK8s Networks on the Site network**. Finally, click **Apply**. 
+From the Select Type of Origin Server menu, select the **K8s Service Name of Origin Server on given Sites** type to specify the origin server with its K8s service name. Then enter the service name of the origin server (including service name we copied earlier and namespace). Select **Virtual Site** option in the Site or Virtual Site menu. And select a virtual site created earlier. After that, pick the **vK8s Networks on the Site network**. Finally, click **Apply**. 
  
 .. figure:: assets/originserver.png  
  
