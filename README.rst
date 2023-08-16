@@ -261,46 +261,38 @@ NOTE. Please, note that the created secret will not be seen from Registries UI a
  
 Updating DB Deployment Chart Values 
 ********************************
- 
-Bitnami provides ready charts for HA database deployments. The postgresql-ha chart can be used. The chart install requires setup of the corresponding variables so that the HA cluster can run in xC environment. The main things to change are: *ves.io/virtual-sites* to specify the virtual site name where the chart will be deployed. The CE virtual site we created needs to be specified. Also, clusterDomain key must be set, so that PostgreSQL services could resolve. And finally, the *kubeVersion* key. 
+
+Bitnami provides ready charts for HA database deployments. The postgresql-ha chart can be used. The chart install requires setup of the corresponding variables so that the HA cluster can run in xC environment. The main things to change are: 
+
+- *ves.io/virtual-sites* to specify the virtual site name where the chart will be deployed. 
+- The CE virtual site we created needs to be specified. 
+- Also, clusterDomain key must be set, so that PostgreSQL services could resolve. 
+- And finally, the *kubeVersion* key. 
  
 Note. It is important to specify memory and CPU resources values for PostgreSQL services unless xC will apply its own minimal values, which are not enough for PostgreSQL successful operation. 
  
-To copy and apply the values, navigate to the **Virtual Sites** and copy the virtual site name and the namespace. 
+Let's proceed to specify the above-mentioned values in the *values.yaml*: 
+  
+.. figure:: assets/pastevs.png 
+
+1. To deploy the load to a predefined virtual site, copy virtual *site name* and *namespace* by navigating to the **Virtual Sites**. Paste the namespace and the virtual site name to the *ves.io/virtual-sites* value in the *values.yaml*. 
   
 .. figure:: assets/copyvs.png 
  
-Paste the copied values into the *values.yaml*. 
-  
-.. figure:: assets/pastevs.png 
- 
-An important key in values for the database is *clusterDomain*. Let's proceed to construct the value this way: *{sitename}.{tenant_id}.tenant.local*. Note that *site_id* here is *Edge site id*, not the virtual one. We can get this information from site settings.  
+2. An important key in values for the database is *clusterDomain*. Let's proceed to construct the value this way: *{sitename}.{tenant_id}.tenant.local*. Note that *site_id* here is *Edge site id*, not the virtual one. We can get this information from site settings.  
  
 First, navigate to the **Multi-Cloud Network Connect** service, proceed to the **Site Management** section, and select the **AWS VPC Sites** option. Open the **JSON** settings of the site in AWS VPC Site list. **Tenant id** and **site name** will be shown as tenant and name fields of the object. 
  
 .. figure:: assets/tenant.png 
- 
-VK8S supports only non-root containers, so these values must be specified::
 
-   containerSecurityContext: 
-      runAsNonRoot: true 
- 
-To deploy the load to a predefined virtual site, specify::
+3. Next, let’s get the *kubeVersion* key. Open the terminal and run the *KUBECONFIG=YOURFILENAME.yaml kubectl version* command to get the *kubectl version*. Then copy the value into the *values.yaml*. 
 
-  commonAnnotations: 
-    ves.io/virtual-sites: "{namespace}/{virtual site name}" 
- 
-Move on and paste the copied values into the *values.yaml*. 
-  
-.. figure:: assets/tenantpaste.png
- 
-And finally, let’s get the *kubeVersion* key. Open the terminal and run the command to get the *kubectl version*. Then copy the value. 
-  
 .. figure:: assets/gitversion.png 
- 
-After that, go back to the *values.yaml* file and paste the version key into the file. 
-  
-.. figure:: assets/kubectlversion.png 
+
+4. Since vK8s supports only non-root containers, make sure the following values are specified::
+
+     containerSecurityContext: 
+       runAsNonRoot: true 
  
  
 Deploying HA PostgreSQL chart to xC vK8s
