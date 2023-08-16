@@ -224,6 +224,13 @@ In the popup window that appears, select the expiration date, and then click **D
   
 .. figure:: assets/kubeconfigdate.png 
 
+Adding Bitnami Helm Chart repository to Helm
+********************************************
+
+Now we need to add the Bitnami Helm chart repository to Helm and then deploy the chart::
+
+   helm repo add bitnami https://charts.bitnami.com/bitnami
+
 Updating Credentials in Makefile
 ***************************
 
