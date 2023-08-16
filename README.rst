@@ -522,7 +522,7 @@ First, give it a name, then specify the **9080** port and proceed to add **Origi
   
 .. figure:: assets/nginxpool.png
  
-First, from the Select Type of Origin Server menu, select **K8s Service Name of Origin Server on given Sites** to specify the origin server with its K8s service name. Then enter the **nginx-rp.ha-services-ce** service name in the Service Name field. Next, select the **Virtual Site** option in the Site or Virtual Site menu to select **ves-io-shared/ves-io-all-res** site which includes all regional edge sites across F5 ADN. After that select **vK8s Networks on Site** which means that the origin server is on vK8s network on the site and, finally, click **Apply**. 
+First, from the Select Type of Origin Server menu, select **K8s Service Name of Origin Server on given Sites** to specify the origin server with its K8s service name. Then enter the **nginx-rp.ha-services-ce** service name in the Service Name field where *nginx-rp* is the deployed service name and *ha-services-ce* is the namespace. Next, select the **Virtual Site** option in the Site or Virtual Site menu to select **ves-io-shared/ves-io-all-res** site which includes all regional edge sites across F5 ADN. After that select **vK8s Networks on Site** which means that the origin server is on vK8s network on the site and, finally, click **Apply**. 
  
 .. figure:: assets/originserversetup.png 
  
