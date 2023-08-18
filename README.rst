@@ -40,7 +40,7 @@ Distributed Cloud Sites on an AWS VPC, which provides ways to easily connect and
  
 The app services that consume database objects could reside close to the end-user if they are deployed in F5 Distributed Cloud Regional Edge, resulting in the following optimized architecture: 
 
-.. figure:: assets/diagram1.png
+.. figure:: assets/diagram1-1.png
 
 Step 1: Prepare environment for HA Load 
 ######################################
