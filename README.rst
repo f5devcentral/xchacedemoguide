@@ -45,7 +45,7 @@ For the detailed information on the use cases covered by this Demo Guide, please
 +===================================================================================================+=================================================================================================================+
 | `HA for AWS Apps via SaaS Console <https://github.com/f5devcentral/xchaawsdemoguide>`_            | `HA for AWS Apps via Terraform  <https://github.com/f5devcentral/xchaawsdemoguide/tree/main/terraform>`_        | 
 +---------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
-| `HA for Azure Apps via SaaS Console <https://github.com/f5devcentral/xchaazdemoguide>`_           | `HA for Azure Apps via Terraform  <https://github.com/f5devcentral/xchaazdemoguide/tree/main/terraform>`_     | 
+| `HA for Azure Apps via SaaS Console <https://github.com/f5devcentral/xchaazdemoguide>`_           | `HA for Azure Apps via Terraform  <https://github.com/f5devcentral/xchaazdemoguide/tree/main/terraform>`_       | 
 +---------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------+
 
 
