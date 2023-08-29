@@ -25,6 +25,24 @@ TCP Load Balancer to a service in a RE that reads and presents the database cont
 Each of the steps in this guide addresses a specific part of the whole deployment process and describes it in detail. Therefore, this guide can be completed step-by-step 
 or by skipping some of the steps if you are already familiar with them.  
 
+Resources 
+#########
+
+For more information on the use cases covered by this Demo Guide, please see the following resources including DevCentral article(s) and YouTube video(s):
+
+- DevCentral Articles: 
+
+  - `Describing HA for Distributed Apps with F5 Distributed Cloud Services <https://community.f5.com/t5/technical-articles/demo-guide-ha-for-distributed-apps-with-f5-distributed-cloud/ta-p/316759>`_
+
+  - `Outlining the architectural decisions and the solution <https://community.f5.com/t5/technical-articles/deploy-high-availability-and-latency-sensitive-workloads-with-f5/ta-p/309740>`_ 
+
+- YouTube videos:
+
+  - `Marketecture and overview of the HA solution <https://www.youtube.com/watch?v=EA4RYZGMlLA>`_
+
+  - `Discussing the different aspects of this configuration <https://www.youtube.com/watch?v=gGlsbVGjk50&t=0s>`_
+
+
 Pre-requisites 
 ##############
 
